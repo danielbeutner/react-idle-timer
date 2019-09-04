@@ -1,20 +1,21 @@
 {
   "name": "react-idle-timer",
-  "version": "1.3.2",
+  "version": "4.2.9",
   "description": "Activity detection for React.js",
-  "main": "build/index.js",
-  "files": [
-    "build",
-    "examples"
-  ],
+  "main": "dist/index.min.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "clean": "rimraf build && rimraf examples/App.js && rimraf examples/init.js && rimraf examples/server.js",
-    "build": "NODE_ENV=production babel src -d build && babel src_examples -d examples",
-    "rebuild": "npm run clean && npm run build",
-    "start": "NODE_ENV=development node examples/server",
-    "test": "npm test",
-    "release": "standard-version",
-    "package": "npm run rebuild && npm version patch && npm publish --tag latest"
+    "build": "rollup -c && cp src/index.d.ts dist/index.d.ts",
+    "watch": "rollup -c -w",
+    "clean": "rimraf dist example/src/dist docs coverage",
+    "lint": "standard lint",
+    "fix": "standard --fix",
+    "test": "yarn lint && jest",
+    "docs": "./scripts/docs",
+    "prepackage": "yarn clean && yarn test && yarn build && yarn docs",
+    "package": "./scripts/package",
+    "example": "./scripts/example"
   },
   "keywords": [
     "react",
@@ -24,53 +25,63 @@
     "activity",
     "active"
   ],
-  "author": "Randy Lebeau",
-  "contributors": [
-    "Cole Chamberlain <cole.chamberlain@gmail.com> (https://github.com/cchamberlain)"
-  ],
+  "author": "Randy Lebeau <randylebeau@gmail.com> (https://github.com/supremetechnopriest)",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/supremetechnopriest/react-idle-timer.git"
   },
-  "dependencies": {
-    "date-fns": "^1.28.5",
-    "in-publish": "^2.0.0",
-    "lodash.bindall": "^3.1.0"
-  },
   "peerDependencies": {
-    "react": "^15.x.x",
-    "react-dom": "^15.x.x",
-    "prop-types": "^15.x.x"
+    "prop-types": "^15.x.x",
+    "react": "^16.x.x",
+    "react-dom": "^16.x.x"
   },
   "devDependencies": {
-    "babel-core": "^6.3.15",
-    "babel-eslint": "^5.0.0-beta4",
-    "babel-loader": "^6.2.0",
-    "babel-plugin-react-transform": "^2.0.0-beta1",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-react": "^6.3.13",
-    "babel-preset-stage-0": "^6.5.0",
-    "del": "^1.2.0",
-    "eslint": "^1.10.3",
-    "eslint-plugin-babel": "^3.0.0",
-    "eslint-plugin-react": "^3.11.3",
-    "express": "^4.13.3",
-    "gulp": "^3.9.0",
-    "gulp-babel": "^5.1.0",
-    "gulp-eslint": "^0.14.0",
-    "gulp-jest": "^0.4.0",
-    "gulp-shell": "^0.4.2",
-    "gulp-uglify": "^1.2.0",
-    "gulp-util": "^3.0.6",
-    "jest-cli": "^0.4.13",
-    "react-transform-catch-errors": "^1.0.2",
-    "react-transform-hmr": "^1.0.4",
-    "redbox-react": "^1.3.0",
-    "rimraf": "^2.4.3",
-    "standard-version": "^2.4.0",
-    "webpack": "^1.12.9",
-    "webpack-dev-middleware": "^1.4.0",
-    "webpack-hot-middleware": "^2.6.0"
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.0",
+    "@babel/plugin-proposal-class-properties": "^7.5.0",
+    "@babel/preset-env": "^7.5.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.2",
+    "babel-jest": "^24.8.0",
+    "date-fns": "^1.30.1",
+    "docco": "^0.8.0",
+    "documentation": "^11.0.1",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "jest": "^24.8.0",
+    "prompt-list": "^3.2.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "rimraf": "^2.6.3",
+    "rollup": "^1.16.6",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-progress": "^1.1.1",
+    "rollup-plugin-uglify-es": "0.0.1",
+    "simulant": "^0.2.2",
+    "sinon": "^7.3.2",
+    "standard": "^12.0.1"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/example/"
+    ],
+    "setupFiles": [
+      "./test.setup.js"
+    ],
+    "collectCoverage": true
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [
+      "beforeEach",
+      "describe",
+      "it",
+      "expect"
+    ]
   }
 }

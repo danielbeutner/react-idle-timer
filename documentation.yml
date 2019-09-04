@@ -1,0 +1,25 @@
+toc:
+  - name: props
+  - timeout
+  - events
+  - onIdle
+  - onActive
+  - onAction
+  - debounce
+  - throttle
+  - element
+  - startOnMount
+  - stopOnIdle
+  - passive
+  - capture
+  - name: methods
+  - reset
+  - pause
+  - resume
+  - getRemainingTime
+  - getElapsedTime
+  - getLastActiveTime
+  - isIdle
+  - name: utilities
+  - debounced
+  - throttled
